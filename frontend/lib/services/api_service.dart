@@ -8,7 +8,8 @@ class ApiService {
   // static const String baseUrl =
   //     "http://192.168.1.16:5000/api";
 
-  static const String baseUrl = "http://192.168.1.15:5000/api";
+  static const String baseUrl = "https://acount-app.onrender.com/api";
+  // static const String baseUrl = "https://account-app.onrender.com/api";
   static const headers = {"Content-Type": "application/json"};
 
   /// ================= OTP =================
