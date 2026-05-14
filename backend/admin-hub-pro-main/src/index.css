@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 20% 97%;
+    --foreground: 220 25% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 25% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 25% 10%;
+
+    --primary: 220 70% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 15% 93%;
+    --secondary-foreground: 220 25% 20%;
+
+    --muted: 220 15% 93%;
+    --muted-foreground: 220 10% 50%;
+
+    --accent: 165 60% 45%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 15% 90%;
+    --input: 220 15% 90%;
+    --ring: 220 70% 50%;
+
+    --radius: 0.75rem;
+
+    --sidebar-bg: 222 47% 11%;
+    --sidebar-fg: 220 15% 75%;
+    --sidebar-active: 220 70% 50%;
+    --sidebar-hover: 222 40% 16%;
+    --sidebar-border: 222 30% 18%;
+
+    --success: 142 60% 45%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+
+    --sidebar-background: 222 47% 11%;
+    --sidebar-foreground: 220 15% 75%;
+    --sidebar-primary: 220 70% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 222 40% 16%;
+    --sidebar-accent-foreground: 220 15% 90%;
+    --sidebar-ring: 220 70% 50%;
+
+    --font-sans: 'DM Sans', system-ui, -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  .dark {
+    --background: 222 47% 6%;
+    --foreground: 220 15% 90%;
+
+    --card: 222 40% 10%;
+    --card-foreground: 220 15% 90%;
+
+    --popover: 222 40% 10%;
+    --popover-foreground: 220 15% 90%;
+
+    --primary: 220 70% 55%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 222 30% 16%;
+    --secondary-foreground: 220 15% 85%;
+
+    --muted: 222 30% 16%;
+    --muted-foreground: 220 10% 55%;
+
+    --accent: 165 60% 45%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 222 30% 18%;
+    --input: 222 30% 18%;
+    --ring: 220 70% 55%;
+
+    --sidebar-bg: 222 50% 7%;
+    --sidebar-fg: 220 15% 65%;
+    --sidebar-active: 220 70% 55%;
+    --sidebar-hover: 222 40% 12%;
+    --sidebar-border: 222 30% 14%;
+
+    --success: 142 60% 45%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+
+    --sidebar-background: 222 50% 7%;
+    --sidebar-foreground: 220 15% 65%;
+    --sidebar-primary: 220 70% 55%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 222 40% 12%;
+    --sidebar-accent-foreground: 220 15% 85%;
+    --sidebar-ring: 220 70% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+}
+
+@layer utilities {
+  .card-shadow {
+    box-shadow: 0 1px 3px 0 hsl(220 25% 10% / 0.04), 0 1px 2px -1px hsl(220 25% 10% / 0.04);
+  }
+
+  .card-shadow-lg {
+    box-shadow: 0 4px 12px 0 hsl(220 25% 10% / 0.06), 0 2px 4px -1px hsl(220 25% 10% / 0.04);
+  }
+
+  .stat-gradient-1 {
+    background: linear-gradient(135deg, hsl(220 70% 50%) 0%, hsl(240 60% 60%) 100%);
+  }
+  .stat-gradient-2 {
+    background: linear-gradient(135deg, hsl(165 60% 45%) 0%, hsl(180 50% 50%) 100%);
+  }
+  .stat-gradient-3 {
+    background: linear-gradient(135deg, hsl(38 92% 50%) 0%, hsl(25 90% 55%) 100%);
+  }
+  .stat-gradient-4 {
+    background: linear-gradient(135deg, hsl(280 60% 55%) 0%, hsl(300 50% 55%) 100%);
+  }
+}
