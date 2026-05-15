@@ -344,7 +344,7 @@ exports.sendOtp = async (req, res) => {
 
     // Exact approved template text
     const message = encodeURIComponent(
-      `Your SmartBahi login OTP is ${otp}. It is valid for 10 minutes. Please do not share this OTP with anyone.`,
+      `Your SmartBahi login OTP is ${otp}. It is valid for 2 minutes. Please do not share this OTP with anyone.`,
     );
 
     // AmazeSMS URL

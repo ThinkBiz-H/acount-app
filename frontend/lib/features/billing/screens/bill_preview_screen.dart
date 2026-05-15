@@ -363,38 +363,35 @@ class _BillPreviewScreenState extends State<BillPreviewScreen> {
         savedPaid = isPaid;
         return true;
       }
-      /// 🔥 LIMIT REACHED (NO PLAN SCREEN)
-      // else if (res["isLimitReached"] == true) {
-      //   ScaffoldMessenger.of(context).showSnackBar(
-      //     const SnackBar(
-      //       content: Text("Daily limit reached 🚫 Upgrade your plan"),
-      //     ),
-      //   );
-      //   // 🚀 PLAN SCREEN OPEN
-      //   Navigator.push(
-      //     context,
-      //     MaterialPageRoute(builder: (_) => const PlanScreen()),
-      //   );
-      //   return false; // ❌ bill save nahi hoga
-      // }
-      /// 🔥 TEMPORARY: IGNORE LIMIT
+      // / 🔥 LIMIT REACHED (NO PLAN SCREEN)
       else if (res["isLimitReached"] == true) {
-        print("Limit ignored temporarily");
-
-        await box.add({...billData, "date": DateTime.now().toIso8601String()});
-
-        if (!isPaid) {
-          await provider.addTransaction(widget.customerName, {
-            'amount': widget.grandTotal,
-            'note': 'Bill ${widget.billNumber}',
-            'date': DateTime.now(),
-            'type': 'GIVEN',
-          });
-        }
-
-        savedPaid = isPaid;
-        return true;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Daily limit reached 🚫 Upgrade your plan"),
+          ),
+        );
+        // 🚀 PLAN SCREEN OPEN
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const PlanScreen()),
+        );
+        return false; // ❌ bill save nahi hoga
       }
+      /// 🔥 TEMPORARY: IGNORE LIMIT
+      // else if (res["isLimitReached"] == true) {
+      //   print("Limit ignored temporarily");
+      //   await box.add({...billData, "date": DateTime.now().toIso8601String()});
+      //   if (!isPaid) {
+      //     await provider.addTransaction(widget.customerName, {
+      //       'amount': widget.grandTotal,
+      //       'note': 'Bill ${widget.billNumber}',
+      //       'date': DateTime.now(),
+      //       'type': 'GIVEN',
+      //     });
+      //   }
+      //   savedPaid = isPaid;
+      //   return true;
+      // }
       /// ❌ OTHER ERROR
       else {
         ScaffoldMessenger.of(
