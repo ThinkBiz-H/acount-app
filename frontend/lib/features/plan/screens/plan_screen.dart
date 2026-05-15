@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '../../../core/services/payment_service.dart';
@@ -76,10 +74,16 @@ class _PlanScreenState extends State<PlanScreen> {
     super.dispose();
   }
 
+  // int getPrice() {
+  //   if (selectedPlan == 1) return 1;
+  //   if (selectedPlan == 2) return 1;
+  //   return 1;
+  // }
   int getPrice() {
-    if (selectedPlan == 1) return 1;
-    if (selectedPlan == 2) return 1;
-    return 1;
+    if (selectedPlan == 0) return 21;
+    if (selectedPlan == 1) return 51;
+    if (selectedPlan == 2) return 99;
+    return 21;
   }
 
   @override
@@ -116,28 +120,28 @@ class _PlanScreenState extends State<PlanScreen> {
               children: [
                 _planCard(
                   index: 0,
-                  title: "Ads Free++",
-                  price: "₹75 for 30 days",
+                  title: "Basic",
+                  price: "₹21 for 30 days",
                   active: true,
                   expiry: "Expires on 22 Feb, 2026",
-                  benefits: const ["Unlimited Transactions", "No Ads"],
+                  benefits: const ["50 Daily Transactions", "No Ads"],
                 ),
+
                 _planCard(
                   index: 1,
-                  title: "Unlimited Transactions",
-                  price: "₹30 for 30 days",
-                  benefits: const [
-                    "Unlimited Daily Ledger Transactions",
-                    "Contain Ads",
-                  ],
+                  title: "Pro",
+                  price: "₹51 for 30 days",
+                  benefits: const ["200 Daily Transactions", "No Ads"],
                 ),
+
                 _planCard(
                   index: 2,
                   title: "Premium",
                   price: "₹99 for 30 days",
                   benefits: const [
-                    "All Benefits of Ads Free++",
-                    "Unlimited transaction SMS",
+                    "Unlimited Transactions",
+                    "Unlimited SMS",
+                    "No Ads",
                   ],
                 ),
               ],

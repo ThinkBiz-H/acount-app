@@ -1,4 +1,3 @@
-
 import 'package:url_launcher/url_launcher.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:convert';
@@ -337,11 +336,25 @@ class CustomerProvider extends ChangeNotifier {
     });
 
     /// 🔥 SMS (NON-BLOCKING)
+    // if (customer.smsEnabled) {
+    //   Future(() {
+    //     final message =
+    //         "Hi ${customer.name},\n"
+    //         "₹${transaction["amount"]} ${transaction["type"] == "GIVEN" ? "udhaar diya" : "paisa mila"}.\n"
+    //         "SmartBahi";
+
+    //     sendSMS(customer.mobile, message);
+    //   });
+    // }
     if (customer.smsEnabled) {
       Future(() {
+        final amount = (transaction["amount"] as num).toStringAsFixed(0);
+
         final message =
-            "Hi ${customer.name},\n"
-            "₹${transaction["amount"]} ${transaction["type"] == "GIVEN" ? "udhaar diya" : "paisa mila"}.\n"
+            "Namaste ${customer.name},\n"
+            "₹$amount udhaar khate me jod diya gaya hai.\n"
+            "Kul bakaya: ₹${customer.balance.abs().toStringAsFixed(0)}\n"
+            "Dhanyawaad,\n"
             "SmartBahi";
 
         sendSMS(customer.mobile, message);

@@ -767,8 +767,34 @@ class _BillPreviewScreenState extends State<BillPreviewScreen> {
 
                         bool success = await saveBillWithoutNavigation();
 
+                        // if (success) {
+                        //   Navigator.pushAndRemoveUntil(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //       builder: (_) => BillPreviewScreen(
+                        //         billKey: widget.billKey,
+                        //         existingBill: widget.existingBill,
+                        //         customerName: widget.customerName,
+                        //         mobile: widget.mobile,
+                        //         address: widget.address,
+                        //         billNumber: widget.billNumber,
+                        //         billDate: widget.billDate,
+                        //         items: widget.items,
+                        //         subTotal: widget.subTotal,
+                        //         gstTotal: widget.gstTotal,
+                        //         cessTotal: widget.cessTotal,
+                        //         charges: widget.charges,
+                        //         discount: widget.discount,
+                        //         grandTotal: widget.grandTotal,
+                        //         isViewOnly: true,
+                        //       ),
+                        //     ),
+                        //     (route) => route
+                        //         .isFirst, // 👈 ONLY root (Billing) bachhega
+                        //   );
+                        // }
                         if (success) {
-                          Navigator.pushAndRemoveUntil(
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                               builder: (_) => BillPreviewScreen(
@@ -789,8 +815,6 @@ class _BillPreviewScreenState extends State<BillPreviewScreen> {
                                 isViewOnly: true,
                               ),
                             ),
-                            (route) => route
-                                .isFirst, // 👈 ONLY root (Billing) bachhega
                           );
                         }
                       },
