@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:frontend/providers/customer_provider.dart';
@@ -10,6 +8,7 @@ import '../../notifications/screens/notification_screen.dart';
 import '../../profile/screens/profile_screen.dart';
 import 'package:hive/hive.dart';
 import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -280,10 +279,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
             /// SHARE ICON
             IconButton(
               icon: const Icon(Icons.share, color: Colors.green),
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Share app coming soon")),
-                );
+              onPressed: () async {
+                final Uri url = Uri.parse("https://google.com"); // dummy link
+
+                if (await canLaunchUrl(url)) {
+                  await launchUrl(url, mode: LaunchMode.externalApplication);
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Link open nahi hua")),
+                  );
+                }
               },
             ),
           ],

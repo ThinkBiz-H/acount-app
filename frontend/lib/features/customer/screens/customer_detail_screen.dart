@@ -1,4 +1,3 @@
-
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +8,7 @@ import 'customer_presonal_statement_screen.dart';
 import '../../help/help_screen.dart';
 import 'give_discount_screen.dart';
 import 'auto_reminder_screen.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomerDetailScreen extends StatefulWidget {
   final String customerName;
@@ -197,20 +197,50 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
               ),
 
               /// WHATSAPP
+              // _MoreItem(
+              //   FontAwesomeIcons.whatsapp,
+              //   "Whatsapp",
+              //   Colors.green,
+              //   onTap: () async {
+              //     Navigator.pop(context);
+
+              //     final provider = Provider.of<CustomerProvider>(
+              //       context,
+              //       listen: false,
+              //     );
+
+              //     final customer = provider.getCustomer(widget.customerName);
+
+              //     final url = Uri.parse("https://wa.me/91${customer.mobile}");
+              //     await launchUrl(url);
+              //   },
+              // ),
               _MoreItem(
-                Icons.message,
+                FontAwesomeIcons.whatsapp,
                 "Whatsapp",
                 Colors.green,
                 onTap: () async {
                   Navigator.pop(context);
+
                   final provider = Provider.of<CustomerProvider>(
                     context,
                     listen: false,
                   );
+
                   final customer = provider.getCustomer(widget.customerName);
 
-                  final url = Uri.parse("https://wa.me/91${customer.mobile}");
-                  await launchUrl(url);
+                  final amount = customer.balance.abs().toStringAsFixed(0);
+
+                  final message =
+                      "Hi ${customer.name},\n"
+                      "Your total due ₹$amount is pending.\n"
+                      "Please pay as soon as possible.";
+
+                  final url = Uri.parse(
+                    "https://wa.me/91${customer.mobile}?text=${Uri.encodeComponent(message)}",
+                  );
+
+                  await launchUrl(url, mode: LaunchMode.externalApplication);
                 },
               ),
             ],
@@ -567,6 +597,34 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
   }
 }
 
+// class _MoreItem extends StatelessWidget {
+//   final IconData icon;
+//   final String title;
+//   final Color color;
+//   final VoidCallback? onTap;
+
+//   const _MoreItem(this.icon, this.title, this.color, {this.onTap});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return GestureDetector(
+//       onTap: onTap,
+//       child: Column(
+//         mainAxisSize: MainAxisSize.min,
+//         children: [
+//           CircleAvatar(
+//             radius: 26,
+//             backgroundColor: color,
+//             child: Icon(icon, color: Colors.white),
+//           ),
+//           const SizedBox(height: 6),
+//           Text(title, textAlign: TextAlign.center),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
 class _MoreItem extends StatelessWidget {
   final IconData icon;
   final String title;
@@ -585,7 +643,9 @@ class _MoreItem extends StatelessWidget {
           CircleAvatar(
             radius: 26,
             backgroundColor: color,
-            child: Icon(icon, color: Colors.white),
+            child: icon == FontAwesomeIcons.whatsapp
+                ? FaIcon(icon, color: Colors.white, size: 22)
+                : Icon(icon, color: Colors.white, size: 22),
           ),
           const SizedBox(height: 6),
           Text(title, textAlign: TextAlign.center),

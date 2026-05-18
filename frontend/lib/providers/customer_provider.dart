@@ -300,6 +300,57 @@ class CustomerProvider extends ChangeNotifier {
 
   /// ================= TRANSACTION =================
 
+  // Future addTransaction(String name, Map transaction) async {
+  //   final settings = Hive.box('settings');
+  //   final ownerMobile = settings.get('mobile');
+
+  //   final customer = getCustomer(name);
+  //   if (customer.id.isEmpty) return;
+
+  //   /// 🔥 INSTANT UI UPDATE (NO WAIT)
+  //   customer.transactions.add({
+  //     "amount": transaction["amount"],
+  //     "type": transaction["type"],
+  //     "note": transaction["note"],
+  //     "time": DateTime.now().toIso8601String(),
+  //   });
+
+  //   notifyListeners(); // ⚡ instant refresh
+
+  //   /// 🔥 BACKEND CALL (BACKGROUND)
+  //   Future(() async {
+  //     try {
+  //       await ApiService.addTransaction({
+  //         "ownerMobile": ownerMobile,
+  //         "customerId": customer.id,
+  //         "type": transaction["type"] == "GIVEN" ? "gave" : "received",
+  //         "amount": transaction["amount"],
+  //         "note": transaction["note"],
+  //       });
+
+  //       /// 🔥 SYNC AGAIN (SAFE)
+  //       await loadTransactions(customer.id, customer.name);
+  //     } catch (e) {
+  //       print("API error: $e");
+  //     }
+  //   });
+
+  //   if (customer.smsEnabled) {
+  //     Future(() {
+  //       final amount = (transaction["amount"] as num).toStringAsFixed(0);
+
+  //       final message =
+  //           "Namaste ${customer.name},\n"
+  //           "₹$amount udhaar khate me jod diya gaya hai.\n"
+  //           "Kul bakaya: ₹${customer.balance.abs().toStringAsFixed(0)}\n"
+  //           "Dhanyawaad,\n"
+  //           "SmartBahi";
+
+  //       sendSMS(customer.mobile, message);
+  //     });
+  //   }
+  // }
+
   Future addTransaction(String name, Map transaction) async {
     final settings = Hive.box('settings');
     final ownerMobile = settings.get('mobile');
@@ -307,7 +358,7 @@ class CustomerProvider extends ChangeNotifier {
     final customer = getCustomer(name);
     if (customer.id.isEmpty) return;
 
-    /// 🔥 INSTANT UI UPDATE (NO WAIT)
+    /// 🔥 INSTANT UI UPDATE
     customer.transactions.add({
       "amount": transaction["amount"],
       "type": transaction["type"],
@@ -315,9 +366,9 @@ class CustomerProvider extends ChangeNotifier {
       "time": DateTime.now().toIso8601String(),
     });
 
-    notifyListeners(); // ⚡ instant refresh
+    notifyListeners();
 
-    /// 🔥 BACKEND CALL (BACKGROUND)
+    /// 🔥 BACKEND CALL
     Future(() async {
       try {
         await ApiService.addTransaction({
@@ -328,31 +379,22 @@ class CustomerProvider extends ChangeNotifier {
           "note": transaction["note"],
         });
 
-        /// 🔥 SYNC AGAIN (SAFE)
         await loadTransactions(customer.id, customer.name);
       } catch (e) {
         print("API error: $e");
       }
     });
 
-    /// 🔥 SMS (NON-BLOCKING)
-    // if (customer.smsEnabled) {
-    //   Future(() {
-    //     final message =
-    //         "Hi ${customer.name},\n"
-    //         "₹${transaction["amount"]} ${transaction["type"] == "GIVEN" ? "udhaar diya" : "paisa mila"}.\n"
-    //         "SmartBahi";
-
-    //     sendSMS(customer.mobile, message);
-    //   });
-    // }
+    /// SMS
     if (customer.smsEnabled) {
       Future(() {
         final amount = (transaction["amount"] as num).toStringAsFixed(0);
 
+        final isGiven = transaction["type"] == "GIVEN";
+
         final message =
             "Namaste ${customer.name},\n"
-            "₹$amount udhaar khate me jod diya gaya hai.\n"
+            "₹$amount udhaar khate me ${isGiven ? "jod diya gaya hai" : "ghata diya gaya hai"}.\n"
             "Kul bakaya: ₹${customer.balance.abs().toStringAsFixed(0)}\n"
             "Dhanyawaad,\n"
             "SmartBahi";

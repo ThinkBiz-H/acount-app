@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import '../../dashboard/screens/dashboard_screen.dart';
 
 class PinLockScreen extends StatefulWidget {
   const PinLockScreen({super.key});
@@ -13,11 +14,13 @@ class _PinLockScreenState extends State<PinLockScreen> {
 
   void verifyPin() {
     final box = Hive.box('settings');
-
     final savedPin = box.get("appPin");
 
     if (controller.text == savedPin) {
-      Navigator.pop(context);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const DashboardScreen()),
+      );
     } else {
       ScaffoldMessenger.of(
         context,

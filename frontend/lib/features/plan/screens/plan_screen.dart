@@ -32,14 +32,17 @@ class _PlanScreenState extends State<PlanScreen> {
 
           // 🔥 PLAN LOGIC (FINAL)
           if (selectedPlan == 0) {
+            plan = "Free";
+            dailyLimit = 5;
+          } else if (selectedPlan == 1) {
             plan = "Basic";
             dailyLimit = 50;
-          } else if (selectedPlan == 1) {
+          } else if (selectedPlan == 2) {
             plan = "Pro";
             dailyLimit = 200;
-          } else if (selectedPlan == 2) {
+          } else if (selectedPlan == 3) {
             plan = "Premium";
-            dailyLimit = -1; // unlimited
+            dailyLimit = -1;
           }
 
           // 🔥 BACKEND CALL (FIXED PARAMS)
@@ -74,22 +77,21 @@ class _PlanScreenState extends State<PlanScreen> {
     super.dispose();
   }
 
-  // int getPrice() {
-  //   if (selectedPlan == 1) return 1;
-  //   if (selectedPlan == 2) return 1;
-  //   return 1;
-  // }
   int getPrice() {
-    if (selectedPlan == 0) return 21;
-    if (selectedPlan == 1) return 51;
-    if (selectedPlan == 2) return 99;
-    return 21;
+    if (selectedPlan == 0) return 0; // Free
+    if (selectedPlan == 1) return 21; // Basic
+    if (selectedPlan == 2) return 51; // Pro
+    if (selectedPlan == 3) return 99; // Premium
+    return 0;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("My Plans")),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Text("My Plans"),
+      ),
       body: Column(
         children: [
           /// INFO BANNER
@@ -120,24 +122,34 @@ class _PlanScreenState extends State<PlanScreen> {
               children: [
                 _planCard(
                   index: 0,
-                  title: "Basic",
-                  price: "₹21 for 30 days",
+                  title: "SmartBahi Free",
+                  price: "₹0 for lifetime",
                   active: true,
+                  expiry: "Default Plan",
+                  benefits: const ["5 Daily Transactions", "Ads Enabled"],
+                ),
+                _planCard(
+                  index: 1,
+                  title: "Dukaan Basic",
+                  price: "₹21 for 30 days",
+                  active: selectedPlan == 1,
                   expiry: "Expires on 22 Feb, 2026",
                   benefits: const ["50 Daily Transactions", "No Ads"],
                 ),
 
                 _planCard(
-                  index: 1,
-                  title: "Pro",
+                  index: 2,
+                  title: "Vyapari Pro",
                   price: "₹51 for 30 days",
+                  active: selectedPlan == 2,
                   benefits: const ["200 Daily Transactions", "No Ads"],
                 ),
 
                 _planCard(
-                  index: 2,
-                  title: "Premium",
+                  index: 3,
+                  title: "Seth Premium",
                   price: "₹99 for 30 days",
+                  active: selectedPlan == 3,
                   benefits: const [
                     "Unlimited Transactions",
                     "Unlimited SMS",
@@ -161,6 +173,14 @@ class _PlanScreenState extends State<PlanScreen> {
               ),
               onPressed: () {
                 int price = getPrice();
+
+                if (price == 0) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Free plan already active")),
+                  );
+                  return;
+                }
+
                 paymentService.openCheckout(price);
               },
               child: const Text(

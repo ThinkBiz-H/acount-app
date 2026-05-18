@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://captivating-achievement-production-bcb2.up.railway.app/api",
+  baseURL: "http://72.60.205.49:5000/api",
 });
 
 export default API;
