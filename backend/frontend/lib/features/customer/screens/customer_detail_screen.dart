@@ -617,6 +617,7 @@ import 'customer_presonal_statement_screen.dart';
 import '../../help/help_screen.dart';
 import 'give_discount_screen.dart';
 import 'auto_reminder_screen.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomerDetailScreen extends StatefulWidget {
   final String customerName;
@@ -806,7 +807,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
 
               /// WHATSAPP
               _MoreItem(
-                Icons.message,
+                FontAwesomeIcons.whatsapp,
                 "Whatsapp",
                 Colors.green,
                 onTap: () async {
@@ -1190,10 +1191,21 @@ class _MoreItem extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          // CircleAvatar(
+          //   radius: 26,
+          //   backgroundColor: color,
+          //   child: Icon(icon, color: Colors.white),
+          // ),
           CircleAvatar(
             radius: 26,
             backgroundColor: color,
-            child: Icon(icon, color: Colors.white),
+            child: icon == FontAwesomeIcons.whatsapp
+                ? Image.asset(
+                    "assets/images/whatsapp.png",
+                    height: 22,
+                    width: 22,
+                  )
+                : Icon(icon, color: Colors.white),
           ),
           const SizedBox(height: 6),
           Text(title, textAlign: TextAlign.center),

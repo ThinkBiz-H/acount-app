@@ -108,7 +108,7 @@ class HelpScreen extends StatelessWidget {
           },
           icon: const Icon(Icons.chat, color: Colors.white),
           label: const Text(
-            "Chat with Us (11AM-8PM) On WhatsApp 7696723164",
+            "Chat with Us (11AM-8PM) ",
             style: TextStyle(color: Colors.white, fontSize: 16),
           ),
         ),
